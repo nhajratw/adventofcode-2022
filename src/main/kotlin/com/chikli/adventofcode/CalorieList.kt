@@ -3,8 +3,8 @@ package com.chikli.adventofcode
 import java.io.FileReader
 
 fun main() {
-    val inputData = FileReader("/tmp/day1.txt").readLines() + "\n"
-    println(CalorieList(inputData).theMostCalories())
+    val inputData = FileReader("/tmp/day1.txt").readLines()
+    println(CalorieList(inputData).totalOfTopThree())
 }
 
 class CalorieList(calories: List<String>) {
@@ -12,8 +12,14 @@ class CalorieList(calories: List<String>) {
     private val normalizedCalories = calories + ""
 
     fun theMostCalories(): Int {
-        if (normalizedCalories == listOf("")) return 0
+        return allCalorieTotals().max()
+    }
 
+    fun totalOfTopThree(): Int {
+        return allCalorieTotals().sortedDescending().take(3).sum()
+    }
+
+    private fun allCalorieTotals(): List<Int> {
         val calorieTotals = mutableListOf<Int>()
         var currentTotal = 0
         normalizedCalories.forEach {
@@ -24,8 +30,7 @@ class CalorieList(calories: List<String>) {
                 currentTotal += it.toInt()
             }
         }
-
-        return calorieTotals.max()
+        return calorieTotals
     }
 }
 
