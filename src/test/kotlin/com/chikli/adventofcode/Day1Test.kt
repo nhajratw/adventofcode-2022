@@ -3,7 +3,7 @@ package com.chikli.adventofcode
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class CalorieListTest {
+class Day1Test {
 
     @Test
     fun `one elf`() {
