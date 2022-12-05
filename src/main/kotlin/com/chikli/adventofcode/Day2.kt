@@ -37,14 +37,14 @@ data class Rps(val score: Int) {
         rock -> paper
         paper -> scissors
         scissors -> rock
-        else -> throw RuntimeException("invalid case")
+        else -> throw IllegalArgumentException("invalid case")
     }
 
     fun beats() = when (this) {
         rock -> scissors
         paper -> rock
         scissors -> paper
-        else -> throw RuntimeException("invalid case")
+        else -> throw IllegalArgumentException("invalid case")
     }
 
     companion object {
@@ -63,6 +63,7 @@ data class Rps(val score: Int) {
     }
 }
 
+@Suppress("MagicNumber")
 enum class Outcome(val score: Int) {
     WIN(6),
     LOSE(0),

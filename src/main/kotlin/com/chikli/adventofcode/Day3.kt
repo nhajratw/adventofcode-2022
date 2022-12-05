@@ -2,6 +2,7 @@ package com.chikli.adventofcode
 
 import java.io.FileReader
 
+@Suppress("MagicNumber")
 fun main() {
     val inputData = FileReader("/tmp/day3.txt").readLines()
     val rucksacks = inputData.map { Rucksack(it) }
@@ -13,6 +14,7 @@ fun main() {
     println(total)
 }
 
+@Suppress("MagicNumber")
 class Rucksack(val items: String) {
 
     companion object {

@@ -7,6 +7,7 @@ fun main() {
     println(CalorieList(inputData).totalOfTopThree())
 }
 
+@Suppress("MagicNumber")
 class CalorieList(calories: List<String>) {
 
     private val normalizedCalories = calories + ""

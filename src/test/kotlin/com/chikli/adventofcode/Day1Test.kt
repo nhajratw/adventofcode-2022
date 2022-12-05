@@ -25,7 +25,9 @@ class Day1Test {
 
     @Test
     fun `total of the top three`() {
-        val calorieList = CalorieList(listOf("1000", "2000", "3000", "", "4000", "", "5000", "6000", "", "7000", "8000", "9000", "", "10000"))
+        val calorieList = CalorieList(
+            listOf("1000", "2000", "3000", "", "4000", "", "5000", "6000", "", "7000", "8000", "9000", "", "10000")
+        )
         assertThat(calorieList.totalOfTopThree()).isEqualTo(45000)
     }
 }
