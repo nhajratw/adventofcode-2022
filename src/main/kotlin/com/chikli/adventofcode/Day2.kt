@@ -1,45 +1,50 @@
 package com.chikli.adventofcode
 
+import com.chikli.adventofcode.Outcome.DRAW
+import com.chikli.adventofcode.Outcome.LOSE
+import com.chikli.adventofcode.Outcome.WIN
 import java.io.FileReader
 
 fun main() {
     val inputData = FileReader("/tmp/day2.txt").readLines()
     val strategy = RpsStrategy(inputData.map {
         val symbols = it.split(' ')
-        RpsStrategyEntry(Rps.from(symbols[0]), Rps.from(symbols[1]))
+        RpsStrategyEntry(Rps.from(symbols[0]), Outcome.from(symbols[1]))
     })
 
     println(strategy.totalScore())
 }
 
 class RpsStrategy(private val entries: List<RpsStrategyEntry>) {
-
     fun totalScore() = entries.sumOf { it.score() }
 }
 
-data class RpsStrategyEntry(val opponent: Rps, val you: Rps) {
+data class RpsStrategyEntry(val opponent: Rps, val outcome: Outcome) {
 
     fun score(): Int {
-        val winnerScore = when {
-            you > opponent -> 6
-            opponent > you -> 0
-            else -> 3
+        val you = when (outcome) {
+            WIN -> opponent.losesTo()
+            LOSE -> opponent.beats()
+            DRAW -> opponent
         }
 
-        return winnerScore + you.score
+        return you.score + outcome.score
     }
 }
 
 data class Rps(val score: Int) {
-    operator fun compareTo(other: Rps): Int {
-        return when {
-            this == other -> 0
-            this == rock && other == scissors ||
-                    this == scissors && other == paper ||
-                    this == paper && other == rock -> 1
+    fun losesTo() = when (this) {
+        rock -> paper
+        paper -> scissors
+        scissors -> rock
+        else -> throw RuntimeException("invalid case")
+    }
 
-            else -> -1
-        }
+    fun beats() = when (this) {
+        rock -> scissors
+        paper -> rock
+        scissors -> paper
+        else -> throw RuntimeException("invalid case")
     }
 
     companion object {
@@ -49,9 +54,26 @@ data class Rps(val score: Int) {
 
         fun from(symbol: String): Rps {
             return when (symbol) {
-                "A", "X" -> rock
-                "B", "Y" -> paper
-                "C", "Z" -> scissors
+                "A" -> rock
+                "B" -> paper
+                "C" -> scissors
+                else -> throw UnknownStrategy(symbol)
+            }
+        }
+    }
+}
+
+enum class Outcome(val score: Int) {
+    WIN(6),
+    LOSE(0),
+    DRAW(3);
+
+    companion object {
+        fun from(symbol: String): Outcome {
+            return when (symbol) {
+                "X" -> LOSE
+                "Y" -> DRAW
+                "Z" -> WIN
                 else -> throw UnknownStrategy(symbol)
             }
         }
