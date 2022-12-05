@@ -2,7 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.7.21"
-    id("io.gitlab.arturbosch.detekt") version "1.21.0"
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    id("com.github.ben-manes.versions") version "0.44.0"
+
 }
 
 group = "com.chikli.adventofcode"
@@ -21,7 +23,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    testImplementation("org.assertj:assertj-core:3.22.0")
+    testImplementation("org.assertj:assertj-core:3.23.1")
 }
 
 tasks.test {
